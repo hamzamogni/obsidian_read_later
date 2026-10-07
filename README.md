@@ -1,6 +1,6 @@
 # Read later for Obsidian
 
-A personal read-it-later system that lives in your vault. You drop links into an inbox note. The `read-later` plugin turns each link into its own reading note: the article text, a YouTube transcript, or a whole X thread. You highlight with `==text==` and inline `#tags`, and a panel collects every highlight.
+A personal read-it-later system that lives in your vault. You drop links into an inbox note. The `read-later` plugin turns each link into its own reading note. An article becomes its text, a YouTube video its transcript, and an X post its whole thread. You highlight with `==text==` and inline `#tags`, and a panel collects every highlight.
 
 The repo has two parts:
 
@@ -71,7 +71,7 @@ The extension badge shows the save state:
 
 ## Process the inbox
 
-On Android the plugin expands the inbox when Obsidian starts and whenever the inbox note changes. On desktop it expands the inbox only when Obsidian starts and when you run **Read later: Process inbox**. Desktop ignores inbox edits that arrive through sync, so a link shared on the phone is expanded on the phone only.
+On Android the plugin expands the inbox when Obsidian starts and whenever the inbox note changes. On desktop it expands the inbox only when Obsidian starts and when you run **Read later: Process inbox**. Desktop ignores inbox edits that arrive through sync, so only the phone expands a link you shared from the phone.
 
 Each successful line leaves the inbox. A failed line stays with one error mark, for example `⚠️ page http 404`. The next run replaces that mark instead of adding another. Fix or delete the line yourself.
 
