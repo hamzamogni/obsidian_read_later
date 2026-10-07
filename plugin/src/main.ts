@@ -68,11 +68,15 @@ export default class ReadLaterPlugin extends Plugin {
       1500,
       true,
     );
-    this.registerEvent(
-      this.app.vault.on("modify", (file) => {
-        if (file.path === this.settings.inboxPath) onInboxChange();
-      }),
-    );
+    // Only the phone reacts to inbox edits: that is where sharing writes. If desktop reacted too, a shared link
+    // synced to an open desktop would be expanded on both devices at once.
+    if (Platform.isMobile) {
+      this.registerEvent(
+        this.app.vault.on("modify", (file) => {
+          if (file.path === this.settings.inboxPath) onInboxChange();
+        }),
+      );
+    }
 
     if (canServe()) {
       this.startServer();
@@ -109,6 +113,7 @@ export default class ReadLaterPlugin extends Plugin {
   }
 
   async capture(capture: Capture) {
+    if (!Platform.isMobile) return this.expander.capture(capture);
     const { vault } = this.app;
     const inbox = vault.getFileByPath(this.settings.inboxPath) ?? (await vault.create(this.settings.inboxPath, ""));
     await vault.process(inbox, (text) => appendToInbox(text, capture));

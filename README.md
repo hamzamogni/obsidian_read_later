@@ -57,6 +57,8 @@ The plugin listens on `127.0.0.1:27181` and accepts requests only with the token
 - **Android.** Share a URL into the inbox note. The plugin expands it about 1.5 seconds after the note changes.
 - **Any device.** Paste a URL on its own line in the inbox, or open `obsidian://read-later?url=<url>&comment=<text>`.
 
+Desktop captures go straight to a note and never pass through the inbox, unless they fail. That keeps a phone with the same synced vault from expanding the same link at the same time.
+
 Text next to a URL in the inbox becomes a `> comment` line at the top of the note. Saving a link that already has a note adds the new comment to that note instead of creating a second one.
 
 The extension badge shows the save state:
@@ -69,7 +71,7 @@ The extension badge shows the save state:
 
 ## Process the inbox
 
-The plugin expands the inbox when Obsidian starts, when the inbox note changes, and after each capture. To run it by hand, use the command **Read later: Process inbox**.
+On Android the plugin expands the inbox when Obsidian starts and whenever the inbox note changes. On desktop it expands the inbox only when Obsidian starts and when you run **Read later: Process inbox**. Desktop ignores inbox edits that arrive through sync, so a link shared on the phone is expanded on the phone only.
 
 Each successful line leaves the inbox. A failed line stays with one error mark, for example `⚠️ page http 404`. The next run replaces that mark instead of adding another. Fix or delete the line yourself.
 

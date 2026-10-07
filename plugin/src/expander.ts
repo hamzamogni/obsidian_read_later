@@ -1,7 +1,7 @@
 import { Notice, type App } from "obsidian";
 import { fetchItem } from "./fetchers";
 import type { Http } from "./fetchers/http";
-import { entryKey, parseInbox, rewriteInbox, type InboxEntry, type Outcome } from "./inbox";
+import { appendToInbox, entryKey, parseInbox, rewriteInbox, type Capture, type InboxEntry, type Outcome } from "./inbox";
 import { insertComment, localDate, noteFileName, notePath, renderNote, sourceOf } from "./note";
 import type { Settings } from "./settings";
 import { normalize, type Source } from "./url";
@@ -16,11 +16,14 @@ async function mapLimit<T>(items: T[], limit: number, fn: (item: T) => Promise<v
   await Promise.all(Array.from({ length: Math.min(limit, queue.length) }, worker));
 }
 
+const captureEntry = (c: Capture): InboxEntry => ({ line: -1, url: c.url, comment: c.comment ?? "" });
+
 const message = (err: unknown) => (err instanceof Error ? err.message : String(err));
 
 export class Expander {
   private running: Promise<void> | null = null;
-  private dirty = false;
+  private inboxRequested = false;
+  private captures: Capture[] = [];
   /** The inbox text this expander last wrote, so its own write does not trigger another run. */
   lastInboxWrite: string | null = null;
 
@@ -30,31 +33,47 @@ export class Expander {
     private http: Http,
   ) {}
 
+  /** Expands every line in the inbox. */
   run(): Promise<void> {
-    if (this.running) {
-      this.dirty = true;
-      return this.running;
-    }
+    this.inboxRequested = true;
+    return this.schedule();
+  }
+
+  /**
+   * Expands one desktop capture without passing it through the synced inbox, so another device never sees it
+   * half-done and expands it a second time. Only a failed capture is written to the inbox, with its error.
+   */
+  capture(capture: Capture): Promise<void> {
+    this.captures.push(capture);
+    return this.schedule();
+  }
+
+  private schedule(): Promise<void> {
+    if (this.running) return this.running;
     this.running = (async () => {
-      do {
-        this.dirty = false;
-        try {
-          await this.runOnce();
-        } catch (err) {
-          new Notice(`Read later: ${message(err)}`);
+      try {
+        while (this.inboxRequested || this.captures.length) {
+          const includeInbox = this.inboxRequested;
+          this.inboxRequested = false;
+          try {
+            await this.runOnce(includeInbox, this.captures.splice(0));
+          } catch (err) {
+            new Notice(`Read later: ${message(err)}`);
+          }
         }
-      } while (this.dirty);
-    })().finally(() => {
-      this.running = null;
-    });
+      } finally {
+        this.running = null;
+      }
+    })();
     return this.running;
   }
 
-  private async runOnce(): Promise<void> {
+  private async runOnce(includeInbox: boolean, captures: Capture[]): Promise<void> {
     const { inboxPath, readingFolder } = this.settings();
     const inbox = this.app.vault.getFileByPath(inboxPath);
-    if (!inbox) return;
-    const entries = [...new Map(parseInbox(await this.app.vault.read(inbox)).map((e) => [entryKey(e), e])).values()];
+    const fromInbox = includeInbox && inbox ? parseInbox(await this.app.vault.read(inbox)) : [];
+    const fromCaptures = captures.map(captureEntry);
+    const entries = [...new Map([...fromInbox, ...fromCaptures].map((e) => [entryKey(e), e])).values()];
     if (!entries.length) return;
 
     const index: Map<string, string | Promise<string>> = await this.sourceIndex(readingFolder);
@@ -91,11 +110,15 @@ export class Expander {
     await mapLimit(entries, CONCURRENCY, async (e) => {
       outcomes.set(entryKey(e), await expand(e));
     });
+
+    const failedCaptures = captures.filter((c) => outcomes.get(entryKey(captureEntry(c)))?.kind === "failed");
+    if (!includeInbox && !failedCaptures.length) return;
+    const file = inbox ?? (await this.app.vault.create(inboxPath, ""));
     let changed = false;
-    this.lastInboxWrite = await this.app.vault.process(inbox, (text) => {
+    this.lastInboxWrite = await this.app.vault.process(file, (text) => {
       // Lines appended mid-run are in this write, so the modify event they caused will be ignored; run again for them.
-      if (parseInbox(text).some((e) => !outcomes.has(entryKey(e)))) this.dirty = true;
-      const next = rewriteInbox(text, outcomes);
+      if (includeInbox && parseInbox(text).some((e) => !outcomes.has(entryKey(e)))) this.inboxRequested = true;
+      const next = rewriteInbox(failedCaptures.reduce(appendToInbox, text), outcomes);
       changed = next !== text;
       return next;
     });
