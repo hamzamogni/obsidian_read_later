@@ -93,6 +93,8 @@ export class Expander {
     });
     let changed = false;
     this.lastInboxWrite = await this.app.vault.process(inbox, (text) => {
+      // Lines appended mid-run are in this write, so the modify event they caused will be ignored; run again for them.
+      if (parseInbox(text).some((e) => !outcomes.has(entryKey(e)))) this.dirty = true;
       const next = rewriteInbox(text, outcomes);
       changed = next !== text;
       return next;
