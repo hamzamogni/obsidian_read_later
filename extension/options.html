@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Read later options</title>
+    <style>
+      :root { color-scheme: light dark; font: 14px/1.5 system-ui, sans-serif; }
+      body { max-width: 34rem; margin: 2rem auto; padding: 0 1rem; }
+      label { display: block; margin-top: 1rem; font-weight: 600; }
+      .hint { font-weight: 400; color: GrayText; font-size: 12px; }
+      input { width: 100%; box-sizing: border-box; padding: 0.4rem; margin-top: 0.25rem; font: inherit; }
+      #token { font-family: ui-monospace, monospace; }
+      .buttons { margin-top: 1.25rem; display: flex; gap: 0.5rem; }
+      button { padding: 0.4rem 0.9rem; font: inherit; }
+      #status { margin-top: 1rem; min-height: 1.5em; }
+      .ok { color: #16a34a; }
+      .error { color: #dc2626; }
+    </style>
+  </head>
+  <body>
+    <h1>Read later</h1>
+    <p>Saves pages into your Obsidian inbox through the Read later plugin running in desktop Obsidian.</p>
+
+    <label for="token">Token
+      <span class="hint">Obsidian, Settings, Read later, Token. Copy it here.</span>
+    </label>
+    <input id="token" type="text" autocomplete="off" spellcheck="false" />
+
+    <label for="port">Port <span class="hint">Default 27181. Must match the plugin setting.</span></label>
+    <input id="port" type="number" min="1" max="65535" />
+
+    <div class="buttons">
+      <button id="save" type="button">Save</button>
+      <button id="test" type="button">Test connection</button>
+    </div>
+    <div id="status" role="status"></div>
+    <div id="queue" class="hint"></div>
+
+    <script src="options.js"></script>
+  </body>
+</html>

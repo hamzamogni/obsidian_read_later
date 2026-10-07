@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Read later (Obsidian)",
+  "version": "0.1.0",
+  "description": "Saves the current tab or a link to your Obsidian read-later inbox without leaving the browser.",
+  "action": { "default_title": "Read later" },
+  "background": { "service_worker": "sw.js" },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "permissions": ["activeTab", "contextMenus", "storage", "alarms"],
+  "host_permissions": ["http://127.0.0.1/*"],
+  "commands": {
+    "_execute_action": { "suggested_key": { "default": "Alt+Shift+L", "mac": "Alt+Shift+L" } }
+  }
+}
