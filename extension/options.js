@@ -12,7 +12,7 @@ function fields() {
 
 async function showQueue() {
   const { queue = [] } = await chrome.storage.local.get("queue");
-  $("queue").textContent = queue.length ? `${queue.length} link(s) waiting to be sent to Obsidian.` : "";
+  $("queue").textContent = queue.length ? `${queue.length} ${queue.length === 1 ? "link is" : "links are"} waiting for Obsidian.` : "";
 }
 
 async function load() {
