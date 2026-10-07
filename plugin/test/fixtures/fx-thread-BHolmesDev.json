@@ -1,0 +1,67 @@
+{
+ "code": 200,
+ "status": {
+  "type": "status",
+  "url": "https://x.com/BHolmesDev/status/2106510336413012463",
+  "id": "2106510336413012463",
+  "text": "Here's the multi-agent system driving our software factory right now. Core pieces:\n\n- We say what to build (sometimes Linear issues, mostly Slack threads)\n- Triage agent researches and decides whether to implement or to ask questions (think /grill-me but smarter)\n- Implementation agent builds, maybe collaborating with us on a spec with a subagent first\n- Verification subagent tests the implementation agent's work e2e\n- Code review agent cycles with the implementation agent for a few rounds before human review\n- Human reviews and ships\n- Monitoring automation responds to alerts and files issues (our first step to closing the factory loop)\n\nThere's room to simplify this. We're benchmarking whether we need separate agents for steps like triage vs. implementation, or if a single high-intelligence model can do most of it. The core loop remains the same though.\n\nCurious how this compares to factories others are deploying",
+  "author": {
+   "screen_name": "BHolmesDev",
+   "name": "Ben Holmes"
+  },
+  "created_timestamp": 1791066175,
+  "replying_to": null,
+  "media": {
+   "all": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTvTvIcWwAEGoF-.jpg?name=orig"
+    }
+   ]
+  }
+ },
+ "thread": [
+  {
+   "type": "status",
+   "url": "https://x.com/BHolmesDev/status/2106510336413012463",
+   "id": "2106510336413012463",
+   "text": "Here's the multi-agent system driving our software factory right now. Core pieces:\n\n- We say what to build (sometimes Linear issues, mostly Slack threads)\n- Triage agent researches and decides whether to implement or to ask questions (think /grill-me but smarter)\n- Implementation agent builds, maybe collaborating with us on a spec with a subagent first\n- Verification subagent tests the implementation agent's work e2e\n- Code review agent cycles with the implementation agent for a few rounds before human review\n- Human reviews and ships\n- Monitoring automation responds to alerts and files issues (our first step to closing the factory loop)\n\nThere's room to simplify this. We're benchmarking whether we need separate agents for steps like triage vs. implementation, or if a single high-intelligence model can do most of it. The core loop remains the same though.\n\nCurious how this compares to factories others are deploying",
+   "author": {
+    "screen_name": "BHolmesDev",
+    "name": "Ben Holmes"
+   },
+   "created_timestamp": 1791066175,
+   "replying_to": null,
+   "media": {
+    "all": [
+     {
+      "type": "photo",
+      "url": "https://pbs.twimg.com/media/HTvTvIcWwAEGoF-.jpg?name=orig"
+     }
+    ]
+   }
+  },
+  {
+   "type": "status",
+   "url": "https://x.com/BHolmesDev/status/2106726397175844923",
+   "id": "2106726397175844923",
+   "text": "Here’s a sample of how this translates to code: https://warp.dev/factories/configuration",
+   "author": {
+    "screen_name": "BHolmesDev",
+    "name": "Ben Holmes"
+   },
+   "created_timestamp": 1791117688,
+   "replying_to": {
+    "screen_name": "BHolmesDev",
+    "status": "2106510336413012463",
+    "url": "https://x.com/BHolmesDev/status/2106510336413012463",
+    "profile_url": "https://x.com/BHolmesDev"
+   },
+   "media": {}
+  }
+ ],
+ "author": {
+  "screen_name": "BHolmesDev",
+  "name": "Ben Holmes"
+ }
+}

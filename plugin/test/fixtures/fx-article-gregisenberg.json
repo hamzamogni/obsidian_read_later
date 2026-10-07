@@ -1,0 +1,247 @@
+{
+ "code": 200,
+ "status": {
+  "type": "status",
+  "url": "https://x.com/gregisenberg/status/2106737353431581132",
+  "id": "2106737353431581132",
+  "text": "https://x.com/i/article/2106728342569250816",
+  "author": {
+   "screen_name": "gregisenberg",
+   "name": "GREG ISENBERG"
+  },
+  "created_timestamp": 1791120301,
+  "replying_to": null,
+  "media": {},
+  "article": {
+   "id": "2106728342569250816",
+   "title": "VIBE MANUFACTURING IS HERE",
+   "created_at": "2026-10-04T13:25:00.000Z",
+   "cover_media": {
+    "media_info": {
+     "original_img_url": "https://pbs.twimg.com/media/HTyiQquWcAAX5dm.jpg"
+    }
+   },
+   "content": {
+    "blocks": [
+     {
+      "key": "5rjm2",
+      "text": "For the FIRST TIME in HISTORY, you can describe a physical product in one sentence and, a week later, hold it in your hands, cut from metal and built to your exact measurements.",
+      "type": "unstyled",
+      "entityRanges": [],
+      "inlineStyleRanges": []
+     },
+     {
+      "key": "e79bj",
+      "text": " ",
+      "type": "atomic",
+      "entityRanges": [
+       {
+        "key": 0,
+        "length": 1,
+        "offset": 0
+       }
+      ],
+      "inlineStyleRanges": []
+     },
+     {
+      "key": "18lcb",
+      "text": "Why hardware was so hard",
+      "type": "header-two",
+      "entityRanges": [],
+      "inlineStyleRanges": [
+       {
+        "length": 24,
+        "offset": 0,
+        "style": "Bold"
+       }
+      ]
+     },
+     {
+      "key": "bif30",
+      "text": "It describes itself. When it connects, it tells the agent exactly what it can sense and do, in plain language.",
+      "type": "ordered-list-item",
+      "entityRanges": [],
+      "inlineStyleRanges": []
+     },
+     {
+      "key": "f89ud",
+      "text": "IIt reports its state constantly. Locked or unlocked, full or empty, open or closed, so the agent always knows what's true.",
+      "type": "ordered-list-item",
+      "entityRanges": [],
+      "inlineStyleRanges": []
+     },
+     {
+      "key": "cepa0",
+      "text": "Note: I’ll be adding more hardware startup ideas to Ideabrowser.com over the next 30 days.",
+      "type": "unstyled",
+      "entityRanges": [
+       {
+        "key": 7,
+        "length": 15,
+        "offset": 52
+       }
+      ],
+      "inlineStyleRanges": []
+     }
+    ],
+    "entityMap": [
+     {
+      "key": "0",
+      "value": {
+       "type": "MEDIA",
+       "data": {
+        "mediaItems": [
+         {
+          "mediaId": "2106734014555942913"
+         }
+        ]
+       }
+      }
+     },
+     {
+      "key": "7",
+      "value": {
+       "type": "LINK",
+       "data": {
+        "url": "http://ideabrowser.com/"
+       }
+      }
+     }
+    ]
+   },
+   "media_entities": [
+    {
+     "media_id": "2106734014555942913",
+     "media_info": {
+      "original_img_url": "https://pbs.twimg.com/media/HTyfbJ3W8AEBoE4.jpg"
+     }
+    }
+   ]
+  }
+ },
+ "thread": [
+  {
+   "type": "status",
+   "url": "https://x.com/gregisenberg/status/2106737353431581132",
+   "id": "2106737353431581132",
+   "text": "https://x.com/i/article/2106728342569250816",
+   "author": {
+    "screen_name": "gregisenberg",
+    "name": "GREG ISENBERG"
+   },
+   "created_timestamp": 1791120301,
+   "replying_to": null,
+   "media": {},
+   "article": {
+    "id": "2106728342569250816",
+    "title": "VIBE MANUFACTURING IS HERE",
+    "created_at": "2026-10-04T13:25:00.000Z",
+    "cover_media": {
+     "media_info": {
+      "original_img_url": "https://pbs.twimg.com/media/HTyiQquWcAAX5dm.jpg"
+     }
+    },
+    "content": {
+     "blocks": [
+      {
+       "key": "5rjm2",
+       "text": "For the FIRST TIME in HISTORY, you can describe a physical product in one sentence and, a week later, hold it in your hands, cut from metal and built to your exact measurements.",
+       "type": "unstyled",
+       "entityRanges": [],
+       "inlineStyleRanges": []
+      },
+      {
+       "key": "e79bj",
+       "text": " ",
+       "type": "atomic",
+       "entityRanges": [
+        {
+         "key": 0,
+         "length": 1,
+         "offset": 0
+        }
+       ],
+       "inlineStyleRanges": []
+      },
+      {
+       "key": "18lcb",
+       "text": "Why hardware was so hard",
+       "type": "header-two",
+       "entityRanges": [],
+       "inlineStyleRanges": [
+        {
+         "length": 24,
+         "offset": 0,
+         "style": "Bold"
+        }
+       ]
+      },
+      {
+       "key": "bif30",
+       "text": "It describes itself. When it connects, it tells the agent exactly what it can sense and do, in plain language.",
+       "type": "ordered-list-item",
+       "entityRanges": [],
+       "inlineStyleRanges": []
+      },
+      {
+       "key": "f89ud",
+       "text": "IIt reports its state constantly. Locked or unlocked, full or empty, open or closed, so the agent always knows what's true.",
+       "type": "ordered-list-item",
+       "entityRanges": [],
+       "inlineStyleRanges": []
+      },
+      {
+       "key": "cepa0",
+       "text": "Note: I’ll be adding more hardware startup ideas to Ideabrowser.com over the next 30 days.",
+       "type": "unstyled",
+       "entityRanges": [
+        {
+         "key": 7,
+         "length": 15,
+         "offset": 52
+        }
+       ],
+       "inlineStyleRanges": []
+      }
+     ],
+     "entityMap": [
+      {
+       "key": "0",
+       "value": {
+        "type": "MEDIA",
+        "data": {
+         "mediaItems": [
+          {
+           "mediaId": "2106734014555942913"
+          }
+         ]
+        }
+       }
+      },
+      {
+       "key": "7",
+       "value": {
+        "type": "LINK",
+        "data": {
+         "url": "http://ideabrowser.com/"
+        }
+       }
+      }
+     ]
+    },
+    "media_entities": [
+     {
+      "media_id": "2106734014555942913",
+      "media_info": {
+       "original_img_url": "https://pbs.twimg.com/media/HTyfbJ3W8AEBoE4.jpg"
+      }
+     }
+    ]
+   }
+  }
+ ],
+ "author": {
+  "screen_name": "gregisenberg",
+  "name": "GREG ISENBERG"
+ }
+}

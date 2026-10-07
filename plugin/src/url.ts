@@ -1,16 +1,15 @@
-export type SourceKind = "article" | "youtube" | "x";
+export type Source =
+  | { url: string; kind: "article" }
+  | { url: string; kind: "youtube"; id: string }
+  | { url: string; kind: "x"; id: string };
 
-export type Source = {
-  url: string;
-  kind: SourceKind;
-  id?: string;
-};
+export type SourceKind = Source["kind"];
 
 type HostRule = (u: URL) => Source | null;
 
 const xStatus: HostRule = (u) => {
-  const m = u.pathname.match(/^\/(\w{1,15})\/status(?:es)?\/(\d+)/);
-  return m ? { url: `https://x.com/${m[1]}/status/${m[2]}`, kind: "x", id: m[2] } : null;
+  const [, user, id] = u.pathname.match(/^\/(\w{1,15})\/status(?:es)?\/(\d+)/) ?? [];
+  return user && id ? { url: `https://x.com/${user}/status/${id}`, kind: "x", id } : null;
 };
 
 const youtube = (id: string | null | undefined): Source | null =>

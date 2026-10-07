@@ -1,0 +1,623 @@
+{
+ "wireMagic": "pb3",
+ "events": [
+  {
+   "tStartMs": 0,
+   "dDurationMs": 904320,
+   "id": 1,
+   "wpWinPosId": 1,
+   "wsWinStyleId": 1
+  },
+  {
+   "tStartMs": 1570,
+   "dDurationMs": 7390,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "[Music]"
+    }
+   ]
+  },
+  {
+   "tStartMs": 7510,
+   "dDurationMs": 1450,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 7520,
+   "dDurationMs": 4360,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "this"
+    },
+    {
+     "utf8": " program",
+     "tOffsetMs": 200
+    },
+    {
+     "utf8": " is",
+     "tOffsetMs": 640
+    },
+    {
+     "utf8": " brought",
+     "tOffsetMs": 760
+    },
+    {
+     "utf8": " to",
+     "tOffsetMs": 999
+    },
+    {
+     "utf8": " you",
+     "tOffsetMs": 1079
+    },
+    {
+     "utf8": " by",
+     "tOffsetMs": 1240
+    }
+   ]
+  },
+  {
+   "tStartMs": 8950,
+   "dDurationMs": 2930,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 8960,
+   "dDurationMs": 5920,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "Stanford"
+    },
+    {
+     "utf8": " University",
+     "tOffsetMs": 559
+    },
+    {
+     "utf8": " please",
+     "tOffsetMs": 1520
+    },
+    {
+     "utf8": " visit",
+     "tOffsetMs": 1840
+    },
+    {
+     "utf8": " us",
+     "tOffsetMs": 2160
+    },
+    {
+     "utf8": " at",
+     "tOffsetMs": 2440
+    }
+   ]
+  },
+  {
+   "tStartMs": 11870,
+   "dDurationMs": 3010,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 11880,
+   "dDurationMs": 3000,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "stanford.edu"
+    }
+   ]
+  },
+  {
+   "tStartMs": 20509,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 20519,
+   "dDurationMs": 3000,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "thank"
+    }
+   ]
+  },
+  {
+   "tStartMs": 26070,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 26080,
+   "dDurationMs": 4320,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "you"
+    },
+    {
+     "utf8": " I'm",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " uh",
+     "tOffsetMs": 1359
+    },
+    {
+     "utf8": " honored",
+     "tOffsetMs": 1840
+    },
+    {
+     "utf8": " to",
+     "tOffsetMs": 2160
+    },
+    {
+     "utf8": " be",
+     "tOffsetMs": 2320
+    },
+    {
+     "utf8": " with",
+     "tOffsetMs": 2480
+    },
+    {
+     "utf8": " you",
+     "tOffsetMs": 2599
+    },
+    {
+     "utf8": " today",
+     "tOffsetMs": 2720
+    }
+   ]
+  },
+  {
+   "tStartMs": 29070,
+   "dDurationMs": 1330,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 29080,
+   "dDurationMs": 4320,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "for"
+    },
+    {
+     "utf8": " your",
+     "tOffsetMs": 160
+    },
+    {
+     "utf8": " commencement",
+     "tOffsetMs": 320
+    },
+    {
+     "utf8": " from",
+     "tOffsetMs": 920
+    },
+    {
+     "utf8": " one",
+     "tOffsetMs": 1039
+    },
+    {
+     "utf8": " of",
+     "tOffsetMs": 1119
+    },
+    {
+     "utf8": " the",
+     "tOffsetMs": 1240
+    }
+   ]
+  },
+  {
+   "tStartMs": 30390,
+   "dDurationMs": 3010,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 30400,
+   "dDurationMs": 4400,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "finest"
+    },
+    {
+     "utf8": " universities",
+     "tOffsetMs": 440
+    },
+    {
+     "utf8": " in",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " the",
+     "tOffsetMs": 1119
+    }
+   ]
+  },
+  {
+   "tStartMs": 33390,
+   "dDurationMs": 1410,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 33400,
+   "dDurationMs": 3999,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "[Applause]"
+    }
+   ]
+  },
+  {
+   "tStartMs": 34790,
+   "dDurationMs": 2609,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 34800,
+   "dDurationMs": 5439,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "world"
+    },
+    {
+     "utf8": " truth",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " be",
+     "tOffsetMs": 1400
+    }
+   ]
+  },
+  {
+   "tStartMs": 37389,
+   "dDurationMs": 2850,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 37399,
+   "dDurationMs": 6121,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "told"
+    },
+    {
+     "utf8": " uh",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " I",
+     "tOffsetMs": 1201
+    },
+    {
+     "utf8": " never",
+     "tOffsetMs": 1320
+    },
+    {
+     "utf8": " graduated",
+     "tOffsetMs": 1561
+    },
+    {
+     "utf8": " from",
+     "tOffsetMs": 2041
+    }
+   ]
+  },
+  {
+   "tStartMs": 40229,
+   "dDurationMs": 3291,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 40239,
+   "dDurationMs": 6401,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "college"
+    },
+    {
+     "utf8": " and",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " uh",
+     "tOffsetMs": 1441
+    },
+    {
+     "utf8": " this",
+     "tOffsetMs": 2081
+    },
+    {
+     "utf8": " is",
+     "tOffsetMs": 2201
+    },
+    {
+     "utf8": " the",
+     "tOffsetMs": 2361
+    },
+    {
+     "utf8": " closest",
+     "tOffsetMs": 2521
+    },
+    {
+     "utf8": " I've",
+     "tOffsetMs": 3081
+    }
+   ]
+  },
+  {
+   "tStartMs": 43510,
+   "dDurationMs": 3130,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 43520,
+   "dDurationMs": 3120,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "ever"
+    },
+    {
+     "utf8": " gotten",
+     "tOffsetMs": 199
+    },
+    {
+     "utf8": " to",
+     "tOffsetMs": 440
+    },
+    {
+     "utf8": " a",
+     "tOffsetMs": 600
+    },
+    {
+     "utf8": " college",
+     "tOffsetMs": 760
+    }
+   ]
+  },
+  {
+   "tStartMs": 46910,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 46920,
+   "dDurationMs": 5159,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "graduation"
+    },
+    {
+     "utf8": " today",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " I",
+     "tOffsetMs": 1720
+    },
+    {
+     "utf8": " want",
+     "tOffsetMs": 1799
+    },
+    {
+     "utf8": " to",
+     "tOffsetMs": 1920
+    },
+    {
+     "utf8": " tell",
+     "tOffsetMs": 2080
+    },
+    {
+     "utf8": " you",
+     "tOffsetMs": 2240
+    }
+   ]
+  },
+  {
+   "tStartMs": 49350,
+   "dDurationMs": 2729,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 49360,
+   "dDurationMs": 5400,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "three"
+    },
+    {
+     "utf8": " stories",
+     "tOffsetMs": 240
+    },
+    {
+     "utf8": " from",
+     "tOffsetMs": 560
+    },
+    {
+     "utf8": " my",
+     "tOffsetMs": 760
+    },
+    {
+     "utf8": " life",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " that's",
+     "tOffsetMs": 1839
+    },
+    {
+     "utf8": " it",
+     "tOffsetMs": 2039
+    },
+    {
+     "utf8": " no",
+     "tOffsetMs": 2519
+    }
+   ]
+  },
+  {
+   "tStartMs": 52069,
+   "dDurationMs": 2691,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 52079,
+   "dDurationMs": 5681,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "big"
+    },
+    {
+     "utf8": " deal",
+     "tOffsetMs": 201
+    },
+    {
+     "utf8": " just",
+     "tOffsetMs": 1081
+    },
+    {
+     "utf8": " three",
+     "tOffsetMs": 1320
+    }
+   ]
+  },
+  {
+   "tStartMs": 54750,
+   "dDurationMs": 3010,
+   "wWinId": 1,
+   "aAppend": 1,
+   "segs": [
+    {
+     "utf8": "\n"
+    }
+   ]
+  },
+  {
+   "tStartMs": 54760,
+   "dDurationMs": 6000,
+   "wWinId": 1,
+   "segs": [
+    {
+     "utf8": "stories"
+    },
+    {
+     "utf8": " the",
+     "tOffsetMs": 1000
+    },
+    {
+     "utf8": " first",
+     "tOffsetMs": 1160
+    },
+    {
+     "utf8": " story",
+     "tOffsetMs": 1560
+    },
+    {
+     "utf8": " is",
+     "tOffsetMs": 2560
+    },
+    {
+     "utf8": " about",
+     "tOffsetMs": 2720
+    }
+   ]
+  }
+ ]
+}
