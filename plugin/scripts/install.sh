@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Builds the plugin and copies it into a vault: scripts/install.sh <vault-path>
 set -euo pipefail
 
 vault="${1:?usage: install.sh <vault-path>}"

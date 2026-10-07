@@ -6,8 +6,7 @@ import { startCaptureServer } from "./server";
 import { parseSettings, ReadLaterSettingTab, type Settings } from "./settings";
 import { HIGHLIGHTS_VIEW, HighlightsView } from "./view";
 
-// Mobile emulation on desktop reports isDesktopApp but blocks Node modules, so isMobile is checked too.
-const canServe = () => Platform.isDesktopApp && !Platform.isMobile;
+const hasNodeModules = () => Platform.isDesktopApp && !Platform.isMobile;
 
 const http: Http = async (req) => {
   const res = await requestUrl({ ...req, throw: false });
@@ -49,7 +48,7 @@ export default class ReadLaterPlugin extends Plugin {
     this.registerView(HIGHLIGHTS_VIEW, (leaf) => new HighlightsView(leaf, () => this.settings.readingFolder));
     this.addRibbonIcon("highlighter", "Open highlights", () => this.openHighlights());
 
-    this.addCommand({ id: "process-inbox", name: "Process inbox", callback: () => this.expander.run() });
+    this.addCommand({ id: "process-inbox", name: "Process inbox", callback: () => this.expander.expandInbox() });
     this.addCommand({ id: "open-highlights", name: "Open highlights", callback: () => this.openHighlights() });
 
     this.registerObsidianProtocolHandler("read-later", async ({ url, comment, title }) => {
@@ -60,40 +59,40 @@ export default class ReadLaterPlugin extends Plugin {
       await this.capture({ url, comment, title });
     });
 
-    const onInboxChange = debounce(
-      async () => {
-        const inbox = this.app.vault.getFileByPath(this.settings.inboxPath);
-        if (inbox && (await this.app.vault.read(inbox)) !== this.expander.lastInboxWrite) await this.expander.run();
-      },
-      1500,
-      true,
-    );
-    // Only the phone reacts to inbox edits: that is where sharing writes. If desktop reacted too, a shared link
-    // synced to an open desktop would be expanded on both devices at once.
-    if (Platform.isMobile) {
-      this.registerEvent(
-        this.app.vault.on("modify", (file) => {
-          if (file.path === this.settings.inboxPath) onInboxChange();
-        }),
-      );
-    }
+    if (Platform.isMobile) this.expandInboxOnPhoneEdits();
 
-    if (canServe()) {
+    if (hasNodeModules()) {
       this.startServer();
       this.register(() => this.stopServer?.());
     }
 
     this.app.workspace.onLayoutReady(async () => {
       await this.ensureVaultFiles();
-      await this.expander.run();
+      await this.expander.expandInbox();
     });
+  }
+
+  private expandInboxOnPhoneEdits() {
+    const onInboxChange = debounce(
+      async () => {
+        const inbox = this.app.vault.getFileByPath(this.settings.inboxPath);
+        if (inbox && (await this.app.vault.read(inbox)) !== this.expander.lastInboxWrite) await this.expander.expandInbox();
+      },
+      1500,
+      true,
+    );
+    this.registerEvent(
+      this.app.vault.on("modify", (file) => {
+        if (file.path === this.settings.inboxPath) onInboxChange();
+      }),
+    );
   }
 
   async saveSettings(change: Partial<Settings>) {
     const portChanged = change.port !== undefined && change.port !== this.settings.port;
     this.settings = { ...this.settings, ...change };
     await this.saveData(this.settings);
-    if (portChanged && canServe()) this.startServer();
+    if (portChanged && hasNodeModules()) this.startServer();
   }
 
   private startServer() {
@@ -103,7 +102,6 @@ export default class ReadLaterPlugin extends Plugin {
     try {
       this.stopServer = startCaptureServer(this.settings.port, () => this.settings.token, (capture) => void this.capture(capture), report);
     } catch (err) {
-      // A failed capture server must not take the inbox and highlights features down with it.
       report(`browser capture is off (${err instanceof Error ? err.message : String(err)})`);
     }
   }
@@ -113,11 +111,11 @@ export default class ReadLaterPlugin extends Plugin {
   }
 
   async capture(capture: Capture) {
-    if (!Platform.isMobile) return this.expander.capture(capture);
+    if (!Platform.isMobile) return this.expander.expandWithoutInbox(capture);
     const { vault } = this.app;
     const inbox = vault.getFileByPath(this.settings.inboxPath) ?? (await vault.create(this.settings.inboxPath, ""));
     await vault.process(inbox, (text) => appendToInbox(text, capture));
-    await this.expander.run();
+    await this.expander.expandInbox();
   }
 
   private async ensureFolder(path: string) {

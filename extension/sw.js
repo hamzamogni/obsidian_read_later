@@ -17,9 +17,8 @@ async function badge(text, color) {
   if (color) await chrome.action.setBadgeBackgroundColor({ color });
 }
 
-// Every queue read-modify-write goes through this chain so overlapping clicks and alarms cannot drop items.
-let chain = Promise.resolve();
-const serially = (task) => (chain = chain.then(task, task));
+let queueLock = Promise.resolve();
+const withQueueLock = (task) => (queueLock = queueLock.then(task, task));
 
 async function flush() {
   const { token, port } = await settings();
@@ -47,14 +46,14 @@ async function flush() {
   if (left.length) return badge(String(left.length), AMBER);
   if (!queue.length) return badge("");
   await badge("✓", GREEN);
-  setTimeout(() => serially(async () => {
+  setTimeout(() => withQueueLock(async () => {
     if (!(await readQueue()).length) await badge("");
   }), 1500);
 }
 
 function save(url, title) {
   if (!/^https?:\/\//.test(url ?? "")) return Promise.resolve();
-  return serially(async () => {
+  return withQueueLock(async () => {
     await chrome.storage.local.set({ queue: [...(await readQueue()), { url, title, savedAt: new Date().toISOString() }] });
     await flush();
   });
@@ -77,18 +76,18 @@ function ensureAlarm() {
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.removeAll(() => chrome.contextMenus.create({ id: "read-later", title: "Read later", contexts: ["link", "page"] }));
   ensureAlarm();
-  serially(flush);
+  withQueueLock(flush);
 });
 
 chrome.runtime.onStartup.addListener(() => {
   ensureAlarm();
-  serially(flush);
+  withQueueLock(flush);
 });
 
-chrome.alarms.onAlarm.addListener((alarm) => alarm.name === "flush" && serially(flush));
+chrome.alarms.onAlarm.addListener((alarm) => alarm.name === "flush" && withQueueLock(flush));
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === "local" && (changes.token || changes.port)) serially(flush);
+  if (area === "local" && (changes.token || changes.port)) withQueueLock(flush);
 });
 
 ensureAlarm();

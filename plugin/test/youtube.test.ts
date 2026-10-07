@@ -3,7 +3,6 @@ import type { HttpRequest } from "../src/fetchers/http";
 import { fetchYoutube, timestamp, transcriptMarkdown } from "../src/fetchers/youtube";
 import { fakeHttp, fixture, rawFixture } from "./fixtures";
 
-// json3 caption tracks fetched on 2026-10-07 through the iOS player; the Stanford one is cut to its first 56 seconds.
 const zoo = fixture<Parameters<typeof transcriptMarkdown>[0]>("youtube-jNQXAC9IVRw-manual.json3");
 const stanford = fixture<Parameters<typeof transcriptMarkdown>[0]>("youtube-UF8uR6Z6KLc-asr.json3");
 

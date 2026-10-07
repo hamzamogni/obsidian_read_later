@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { appendToInbox, entryKey, parseInbox, rewriteInbox, type Outcome } from "../src/inbox";
+import { appendToInbox, contentKey, parseInbox, rewriteInbox, type Outcome } from "../src/inbox";
 
 const INBOX = [
   "# Inbox",
@@ -29,7 +29,7 @@ describe("parseInbox", () => {
 });
 
 describe("rewriteInbox", () => {
-  const [astronomer, pili, holmes, effect, youtube] = parseInbox(INBOX).map(entryKey) as [string, string, string, string, string];
+  const [astronomer, pili, holmes, effect, youtube] = parseInbox(INBOX).map(contentKey) as [string, string, string, string, string];
 
   it("removes created and duplicate lines, marks failed lines, keeps the rest", () => {
     const outcomes = new Map<string, Outcome>([
@@ -71,7 +71,7 @@ describe("rewriteInbox", () => {
 
   it("collapses runs of blank lines left behind", () => {
     const text = "top\n\nhttps://a.com/x\n\n\n\nbottom\n";
-    const key = entryKey(parseInbox(text)[0]!);
+    const key = contentKey(parseInbox(text)[0]!);
     expect(rewriteInbox(text, new Map([[key, { kind: "created", path: "x.md" }]]))).toBe("top\n\nbottom\n");
   });
 });

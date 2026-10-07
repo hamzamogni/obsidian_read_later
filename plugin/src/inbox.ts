@@ -40,8 +40,7 @@ export function parseInbox(text: string): InboxEntry[] {
   return text.split("\n").flatMap((l, i) => parseLine(l, i) ?? []);
 }
 
-// Identifies an entry across rewrites: line numbers shift when lines are appended or removed mid-run.
-export const entryKey = (e: InboxEntry) => `${e.url}\n${e.comment}`;
+export const contentKey = (e: InboxEntry) => `${e.url}\n${e.comment}`;
 
 const shortError = (error: string) => {
   const oneLine = error.replace(/\s+/g, " ").trim();
@@ -51,7 +50,7 @@ const shortError = (error: string) => {
 export function rewriteInbox(text: string, outcomes: Map<string, Outcome>): string {
   const kept = text.split("\n").flatMap((l, i) => {
     const entry = parseLine(l, i);
-    const outcome = entry && outcomes.get(entryKey(entry));
+    const outcome = entry && outcomes.get(contentKey(entry));
     if (!outcome) return [l];
     if (outcome.kind === "failed") return [`${l.replace(ERROR_MARK, "")} ⚠️ ${shortError(outcome.error)}`];
     return [];

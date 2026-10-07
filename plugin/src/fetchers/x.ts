@@ -26,8 +26,7 @@ type FxPost = {
   id: string;
   url: string;
   text: string;
-  // Posts after the first in a thread carry only the screen name.
-  author: FxAuthor | string;
+  author: FxAuthor;
   created_timestamp: number;
   media?: { all?: FxMedia[] };
   quote?: FxPost;
@@ -40,7 +39,7 @@ export type FxThreadResponse = {
   author?: FxAuthor;
 };
 
-const handleOf = (p: FxPost) => (typeof p.author === "string" ? p.author : p.author.screen_name);
+const handleOf = (p: FxPost) => p.author.screen_name;
 
 const quote = (s: string) =>
   s
@@ -101,7 +100,7 @@ function renderPost(p: FxPost): string {
   const parts = [text, media(p.media?.all)];
   if (p.quote) {
     const q = p.quote;
-    const who = typeof q.author === "string" ? `@${q.author}` : `${q.author.name} (@${q.author.screen_name})`;
+    const who = `${q.author.name} (@${q.author.screen_name})`;
     parts.push(quote([`**${who}**`, "", q.text, media(q.media?.all), `[Quoted post](${q.url})`].filter(Boolean).join("\n")));
   }
   if (p.article) parts.push(renderArticle(p.article));
@@ -121,7 +120,7 @@ export function renderThread(res: FxThreadResponse, id: string): FetchedItem {
   const handle = handleOf(target);
   const own = posts.filter((p) => handleOf(p).toLowerCase() === handle.toLowerCase());
   const first = own[0] ?? target;
-  const name = typeof first.author === "string" ? (res.author?.name ?? handle) : first.author.name;
+  const name = first.author.name;
   return {
     title: first.article?.title ?? titleFrom(handle, first.text),
     author: `${name} (@${handle})`,

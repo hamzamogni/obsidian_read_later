@@ -59,14 +59,15 @@ const frontmatterEnd = (lines: string[]) => {
   return close === -1 ? 0 : close + 1;
 };
 
-// Comments sit directly under the frontmatter with no blank line; the body always starts after a blank line.
+const commentWithBodyGap = (quoted: string, next: string | undefined) => (next === "" ? [quoted] : [quoted, ""]);
+
 export function insertComment(note: string, comment: string): string {
   const quoted = `> ${comment}`;
   const lines = note.split("\n");
   if (!comment || lines.includes(quoted)) return note;
   let at = frontmatterEnd(lines);
   while (lines[at]?.startsWith(">")) at++;
-  lines.splice(at, 0, ...(lines[at] === "" ? [quoted] : [quoted, ""]));
+  lines.splice(at, 0, ...commentWithBodyGap(quoted, lines[at]));
   return lines.join("\n");
 }
 

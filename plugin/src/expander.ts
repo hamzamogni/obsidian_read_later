@@ -1,7 +1,7 @@
 import { Notice, type App } from "obsidian";
 import { fetchItem } from "./fetchers";
 import type { Http } from "./fetchers/http";
-import { appendToInbox, entryKey, parseInbox, rewriteInbox, type Capture, type InboxEntry, type Outcome } from "./inbox";
+import { appendToInbox, contentKey, parseInbox, rewriteInbox, type Capture, type InboxEntry, type Outcome } from "./inbox";
 import { insertComment, localDate, noteFileName, notePath, renderNote, sourceOf } from "./note";
 import type { Settings } from "./settings";
 import { normalize, type Source } from "./url";
@@ -18,13 +18,14 @@ async function mapLimit<T>(items: T[], limit: number, fn: (item: T) => Promise<v
 
 const captureEntry = (c: Capture): InboxEntry => ({ line: -1, url: c.url, comment: c.comment ?? "" });
 
+const inboxGrewDuringRun = (text: string, outcomes: Map<string, Outcome>) => parseInbox(text).some((e) => !outcomes.has(contentKey(e)));
+
 const message = (err: unknown) => (err instanceof Error ? err.message : String(err));
 
 export class Expander {
   private running: Promise<void> | null = null;
   private inboxRequested = false;
   private captures: Capture[] = [];
-  /** The inbox text this expander last wrote, so its own write does not trigger another run. */
   lastInboxWrite: string | null = null;
 
   constructor(
@@ -33,17 +34,12 @@ export class Expander {
     private http: Http,
   ) {}
 
-  /** Expands every line in the inbox. */
-  run(): Promise<void> {
+  expandInbox(): Promise<void> {
     this.inboxRequested = true;
     return this.schedule();
   }
 
-  /**
-   * Expands one desktop capture without passing it through the synced inbox, so another device never sees it
-   * half-done and expands it a second time. Only a failed capture is written to the inbox, with its error.
-   */
-  capture(capture: Capture): Promise<void> {
+  expandWithoutInbox(capture: Capture): Promise<void> {
     this.captures.push(capture);
     return this.schedule();
   }
@@ -73,7 +69,7 @@ export class Expander {
     const inbox = this.app.vault.getFileByPath(inboxPath);
     const fromInbox = includeInbox && inbox ? parseInbox(await this.app.vault.read(inbox)) : [];
     const fromCaptures = captures.map(captureEntry);
-    const entries = [...new Map([...fromInbox, ...fromCaptures].map((e) => [entryKey(e), e])).values()];
+    const entries = [...new Map([...fromInbox, ...fromCaptures].map((e) => [contentKey(e), e])).values()];
     if (!entries.length) return;
 
     const index: Map<string, string | Promise<string>> = await this.sourceIndex(readingFolder);
@@ -108,22 +104,20 @@ export class Expander {
     };
 
     await mapLimit(entries, CONCURRENCY, async (e) => {
-      outcomes.set(entryKey(e), await expand(e));
+      outcomes.set(contentKey(e), await expand(e));
     });
 
-    const failedCaptures = captures.filter((c) => outcomes.get(entryKey(captureEntry(c)))?.kind === "failed");
+    const failedCaptures = captures.filter((c) => outcomes.get(contentKey(captureEntry(c)))?.kind === "failed");
     if (!includeInbox && !failedCaptures.length) return;
     const file = inbox ?? (await this.app.vault.create(inboxPath, ""));
-    let changed = false;
+    let inboxChanged = false;
     this.lastInboxWrite = await this.app.vault.process(file, (text) => {
-      // Lines appended mid-run are in this write, so the modify event they caused will be ignored; run again for them.
-      if (includeInbox && parseInbox(text).some((e) => !outcomes.has(entryKey(e)))) this.inboxRequested = true;
+      if (includeInbox && inboxGrewDuringRun(text, outcomes)) this.inboxRequested = true;
       const next = rewriteInbox(failedCaptures.reduce(appendToInbox, text), outcomes);
-      changed = next !== text;
+      inboxChanged = next !== text;
       return next;
     });
-    // A rerun that only hits the same failures again leaves the inbox as it was and stays quiet.
-    if (changed) new Notice(summary([...outcomes.values()]));
+    if (inboxChanged) new Notice(summary([...outcomes.values()]));
   }
 
   private async sourceIndex(folder: string): Promise<Map<string, string>> {

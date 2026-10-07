@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { fetchX, renderThread, type FxThreadResponse } from "../src/fetchers/x";
 import { fakeHttp, fixture } from "./fixtures";
 
-// Fixtures are real api.fxtwitter.com/2/thread responses from 2026-10-07, trimmed to the fields the renderer reads.
 const holmes = fixture<FxThreadResponse>("fx-thread-BHolmesDev.json");
 const pili = fixture<FxThreadResponse>("fx-quote-0xpili_.json");
 const greg = fixture<FxThreadResponse>("fx-article-gregisenberg.json");

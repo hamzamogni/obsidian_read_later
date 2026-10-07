@@ -1,5 +1,3 @@
-// Runs the real fetchers against live URLs from Node. Not part of the test suite: it needs the network.
-// Usage: node scripts/smoke-fetchers.mjs [url ...]
 import esbuild from "esbuild";
 import { DOMParser } from "linkedom";
 import { mkdtempSync, writeFileSync } from "node:fs";

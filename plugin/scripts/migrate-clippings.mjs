@@ -1,6 +1,3 @@
-// Usage: node scripts/migrate-clippings.mjs <vault> [--apply]
-// Moves Web Clipper notes from <vault>/Clippings into the reading folder as unread reading notes.
-// Without --apply it only prints the plan. With --apply it first copies Clippings to a timestamped backup.
 import { build } from "esbuild";
 import { cpSync, existsSync, readdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";

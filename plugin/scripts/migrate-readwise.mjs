@@ -1,8 +1,3 @@
-// Usage: node scripts/migrate-readwise.mjs <vault> [--apply]
-// Merges the Readwise exports in 01-Resources/Readwise and 01-Notes/Readwise into one reading note per title,
-// marked read, with each highlight as ==text== and Readwise tags as inline #tags.
-// Without --apply it prints the plan and the verification. With --apply it backs up both folders, writes the notes,
-// verifies every original highlight landed, and only then removes the originals.
 import { build } from "esbuild";
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
@@ -22,7 +17,6 @@ const meta = (text, key) => text.match(new RegExp(`^- ${key}:? (.*)$`, "m"))?.[1
 const summaryOf = (text) => text.match(/^- Summary: ([\s\S]*?)\n(?=- |\n|##)/m)?.[1].trim() ?? "";
 const TYPES = { "source/books": "book", "source/articles": "article", "source/tweets": "x", "source/podcasts": "podcast" };
 
-/** A highlight: its own lines (first line starts after "- "), Readwise tags, and the user's note sub-bullets. */
 function parseHighlights(text) {
   const body = text.split(/^## Highlights\s*$/m)[1] ?? "";
   const out = [];
@@ -109,8 +103,7 @@ const plan = names.map((name) => {
 const LINK = /\s*\(\[(?:View Highlight|Location\s\d+)\]\([^)]+\)\)/;
 const flat = (s) => s.replace(/==|\*\*|__/g, "").replace(/\s+/g, " ").trim();
 
-/** Every non-empty line of every original highlight, and every note under it, must appear in the new note. */
-function verify(p) {
+function findLostHighlights(p) {
   const note = flat(p.note);
   const originals = p.texts.flatMap(parseHighlights);
   const missing = originals.flatMap((h) => h.lines.map((l) => flat(l.replace(LINK, ""))).filter((l) => l && !note.includes(l)));
@@ -122,7 +115,7 @@ function verify(p) {
 
 let ok = true;
 for (const p of plan) {
-  const v = verify(p);
+  const v = findLostHighlights(p);
   const counts = `${p.highlights.length} highlights from ${p.copies.length} cop${p.copies.length > 1 ? "ies" : "y"}`;
   if (v.missing.length || v.notes.length) ok = false;
   console.log(`${p.skip ? "skip" : "move"}  [${p.type}] ${p.name}  ${counts}${p.skip ? `  (${p.skip})` : ""}${v.missing.length || v.notes.length ? `  MISSING ${v.missing.length} lines, ${v.notes.length} notes: ${JSON.stringify([...v.missing, ...v.notes].slice(0, 2))}` : ""}`);

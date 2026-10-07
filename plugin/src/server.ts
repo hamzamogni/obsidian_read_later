@@ -64,14 +64,17 @@ export function routeCapture(req: CaptureRequest, token: string): CaptureRespons
   return json(404, { ok: false, error: "not found" });
 }
 
-/** Desktop only: Node's http module does not exist on mobile. Returns a function that stops the server. */
+export type StopServer = () => void;
+
+const loadDesktopOnlyHttp = () => require("http") as typeof NodeHttp;
+
 export function startCaptureServer(
   port: number,
   token: () => string,
   onCapture: (capture: Capture) => void,
   onError: (message: string) => void,
-): () => void {
-  const http = require("http") as typeof NodeHttp;
+): StopServer {
+  const http = loadDesktopOnlyHttp();
   const server = http.createServer((req, res) => {
     let body = "";
     req.on("data", (chunk: Buffer) => {
