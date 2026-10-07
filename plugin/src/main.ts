@@ -1,7 +1,8 @@
-import { debounce, Notice, Plugin, requestUrl } from "obsidian";
+import { debounce, Notice, Platform, Plugin, requestUrl } from "obsidian";
 import { Expander } from "./expander";
 import type { Http } from "./fetchers/http";
 import { appendToInbox, type Capture } from "./inbox";
+import { startCaptureServer } from "./server";
 import { parseSettings, ReadLaterSettingTab, type Settings } from "./settings";
 
 const http: Http = async (req) => {
@@ -33,6 +34,7 @@ export function queueBase(folder: string): string {
 export default class ReadLaterPlugin extends Plugin {
   declare settings: Settings;
   private expander!: Expander;
+  private stopServer: (() => void) | null = null;
 
   async onload() {
     this.settings = parseSettings(await this.loadData());
@@ -64,6 +66,11 @@ export default class ReadLaterPlugin extends Plugin {
       }),
     );
 
+    if (Platform.isDesktopApp) {
+      this.startServer();
+      this.register(() => this.stopServer?.());
+    }
+
     this.app.workspace.onLayoutReady(async () => {
       await this.ensureVaultFiles();
       await this.expander.run();
@@ -71,8 +78,20 @@ export default class ReadLaterPlugin extends Plugin {
   }
 
   async saveSettings(change: Partial<Settings>) {
+    const portChanged = change.port !== undefined && change.port !== this.settings.port;
     this.settings = { ...this.settings, ...change };
     await this.saveData(this.settings);
+    if (portChanged && Platform.isDesktopApp) this.startServer();
+  }
+
+  private startServer() {
+    this.stopServer?.();
+    this.stopServer = startCaptureServer(
+      this.settings.port,
+      () => this.settings.token,
+      (capture) => void this.capture(capture),
+      (message) => new Notice(`Read later: ${message}`),
+    );
   }
 
   async capture(capture: Capture) {
