@@ -1,0 +1,105 @@
+.read-later-highlights {
+  padding: var(--size-4-3);
+}
+
+.read-later-highlights .rl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-4-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--size-4-3);
+}
+
+.read-later-highlights .rl-count {
+  font-weight: var(--font-semibold);
+  color: var(--text-normal);
+}
+
+.read-later-highlights .rl-toggle {
+  display: inline-flex;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.read-later-highlights .rl-toggle button {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  padding: var(--size-4-1) var(--size-4-3);
+  height: auto;
+}
+
+.read-later-highlights .rl-toggle button.is-active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.read-later-highlights .rl-empty {
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
+
+.read-later-highlights .rl-group {
+  margin-bottom: var(--size-4-4);
+}
+
+.read-later-highlights .rl-group-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--size-4-2);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  text-transform: none;
+  margin-bottom: var(--size-4-2);
+}
+
+.read-later-highlights .rl-group-count {
+  font-weight: var(--font-normal);
+  color: var(--text-faint);
+}
+
+.read-later-highlights .rl-card {
+  padding: var(--size-4-2) var(--size-4-3);
+  margin-bottom: var(--size-4-2);
+  border-left: 3px solid var(--text-highlight-bg-active, var(--interactive-accent));
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+  cursor: var(--cursor-link, pointer);
+}
+
+.read-later-highlights .rl-card:hover,
+.read-later-highlights .rl-card:focus-visible {
+  background: var(--background-modifier-hover);
+  outline: none;
+}
+
+.read-later-highlights .rl-card-text {
+  color: var(--text-normal);
+  line-height: var(--line-height-normal);
+  overflow-wrap: anywhere;
+}
+
+.read-later-highlights .rl-card-source {
+  margin-top: var(--size-4-1);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-faint);
+  overflow-wrap: anywhere;
+}
+
+.is-mobile .read-later-highlights .rl-card {
+  padding: var(--size-4-3);
+}
+
+.is-mobile .read-later-highlights .rl-toggle button {
+  padding: var(--size-4-2) var(--size-4-3);
+}
+
+.read-later-token {
+  font-family: var(--font-monospace);
+}

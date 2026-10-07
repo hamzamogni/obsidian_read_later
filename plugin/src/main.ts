@@ -4,6 +4,10 @@ import type { Http } from "./fetchers/http";
 import { appendToInbox, type Capture } from "./inbox";
 import { startCaptureServer } from "./server";
 import { parseSettings, ReadLaterSettingTab, type Settings } from "./settings";
+import { HIGHLIGHTS_VIEW, HighlightsView } from "./view";
+
+// Mobile emulation on desktop reports isDesktopApp but blocks Node modules, so isMobile is checked too.
+const canServe = () => Platform.isDesktopApp && !Platform.isMobile;
 
 const http: Http = async (req) => {
   const res = await requestUrl({ ...req, throw: false });
@@ -42,7 +46,11 @@ export default class ReadLaterPlugin extends Plugin {
     this.expander = new Expander(this.app, () => this.settings, http);
     this.addSettingTab(new ReadLaterSettingTab(this.app, this));
 
+    this.registerView(HIGHLIGHTS_VIEW, (leaf) => new HighlightsView(leaf, () => this.settings.readingFolder));
+    this.addRibbonIcon("highlighter", "Open highlights", () => this.openHighlights());
+
     this.addCommand({ id: "process-inbox", name: "Process inbox", callback: () => this.expander.run() });
+    this.addCommand({ id: "open-highlights", name: "Open highlights", callback: () => this.openHighlights() });
 
     this.registerObsidianProtocolHandler("read-later", async ({ url, comment, title }) => {
       if (!url || !/^https?:\/\//.test(url)) {
@@ -66,7 +74,7 @@ export default class ReadLaterPlugin extends Plugin {
       }),
     );
 
-    if (Platform.isDesktopApp) {
+    if (canServe()) {
       this.startServer();
       this.register(() => this.stopServer?.());
     }
@@ -81,17 +89,23 @@ export default class ReadLaterPlugin extends Plugin {
     const portChanged = change.port !== undefined && change.port !== this.settings.port;
     this.settings = { ...this.settings, ...change };
     await this.saveData(this.settings);
-    if (portChanged && Platform.isDesktopApp) this.startServer();
+    if (portChanged && canServe()) this.startServer();
   }
 
   private startServer() {
     this.stopServer?.();
-    this.stopServer = startCaptureServer(
-      this.settings.port,
-      () => this.settings.token,
-      (capture) => void this.capture(capture),
-      (message) => new Notice(`Read later: ${message}`),
-    );
+    this.stopServer = null;
+    const report = (message: string) => new Notice(`Read later: ${message}`);
+    try {
+      this.stopServer = startCaptureServer(this.settings.port, () => this.settings.token, (capture) => void this.capture(capture), report);
+    } catch (err) {
+      // A failed capture server must not take the inbox and highlights features down with it.
+      report(`browser capture is off (${err instanceof Error ? err.message : String(err)})`);
+    }
+  }
+
+  async openHighlights() {
+    await this.app.workspace.ensureSideLeaf(HIGHLIGHTS_VIEW, "right", { active: true, reveal: true });
   }
 
   async capture(capture: Capture) {
